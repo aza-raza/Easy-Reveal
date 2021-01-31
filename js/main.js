@@ -1,18 +1,31 @@
-let hWindow = window.innerHeight;
-let revealable = document.querySelector('.revealable');
+window.addEventListener('load', function(){
+    let hWindow = window.innerHeight;
+    //console.log(hWindow)
+    let revealables = document.querySelectorAll('.revealable');
+    let revealablesArray = Array.from(revealables);
+    
 
-let hRevealable = revealable.offsetHeight;
-let toScroll = hWindow - hRevealable;
-//console.log('toscrolle'+toScroll)
+    
 
+    window.addEventListener('scroll', function(){
 
+        let camPos = window.pageYOffset + hWindow;
+        
+        revealablesArray.forEach(function(item){
 
+        let imgHeight = item.offsetHeight;
+        let imgTopPosinDom = item.getBoundingClientRect().top + window.pageYOffset;
+        let triggerPixel = imgTopPosinDom + (imgHeight)/3;
+        console.log(item.id, camPos, triggerPixel, imgTopPosinDom, imgHeight)
+        
 
-window.addEventListener('scroll', function(){
-    let scrolled = window.pageYOffset;
-    console.log(hWindow, scrolled)
+        if(camPos > triggerPixel){
+            item.classList.add('revealed')
+        }
+    
+        })
 
-    if(scrolled > toScroll){
-        revealable.classList.add('revealed')
-    }
-}); 
+        
+    }); 
+
+})
